@@ -1,11 +1,13 @@
 import express from "express";
-import { signin, signup } from "../controllers/user";
+import { isAuthanticated, signin, signup } from "../controllers/user";
 const router = express.Router();
 
 router.post("/signup", signup);
 
-router.get("/signin", signin);
+router.post("/signin", signin);
 // router.("/signout")
 // router.("/resetpassword")
+
+router.get("/test", isAuthanticated);
 
 export default router;
