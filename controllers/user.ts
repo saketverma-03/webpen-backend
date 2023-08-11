@@ -37,6 +37,7 @@ export const signup = async (req: Request, res: Response) => {
 /* User Sign in */
 export const signin = async (req: Request, res: Response) => {
   const { email, password } = req.body;
+  // res.header["Access-Control-Allow-Credentials"] = true;
   // console.log(req);
   try {
     const user = await prisma.user.findFirst({
@@ -76,15 +77,24 @@ export const isAuthanticated = async (
   res: Response,
   next: Function
 ) => {
-  const bearerHeader = req.headers["authorization"];
+  // const bearerHeader = req.headers["authorization"];
+  // if (!bearerHeader) {
+  //   return res.status(400).json({ message: "User Unauthorized please login" });
+  // }
 
-  if (!bearerHeader) {
-    return res.status(400).json({ message: "User Unauthorized please login" });
+  const bearerToken = req.cookies;
+  if (!bearerToken["token"]) {
+    return res
+      .status(400)
+      .json({
+        message: "Token not available , pleas login again",
+        bearerToken,
+      });
   }
-
-  const bearerToken = bearerHeader.split(" ");
+  // const bearerToken = bearerHeader.split(" ");
   try {
-    req.auth = jwt.verify(bearerToken[1], "saket");
+    // req.auth = jwt.verify(bearerToken[1], "saket");
+    req.auth = jwt.verify(bearerToken["token"], "saket");
     next();
   } catch (e: any) {
     return res.status(400).json({ message: e.message });
