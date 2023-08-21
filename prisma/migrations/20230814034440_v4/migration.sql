@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "Project" ADD COLUMN     "details" TEXT DEFAULT '',
+ALTER COLUMN "html" SET DEFAULT '',
+ALTER COLUMN "css" SET DEFAULT '',
+ALTER COLUMN "js" SET DEFAULT '';
