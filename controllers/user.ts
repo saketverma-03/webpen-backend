@@ -54,10 +54,12 @@ export const signin = async (req: Request, res: Response) => {
       res.status(400).json({ message: "email and password do not match" });
 
     const token = jwt.sign({ id: user.id }, "saket", {
-      expiresIn: "1h",
+      expiresIn: "24h",
     });
 
-    res.cookie("token", token);
+    res.cookie("token", token, {
+      expires: new Date(1000 * 60 * 60 * 24 + Date.now()),
+    });
 
     return res.status(200).json({
       id: user.id,
@@ -77,23 +79,15 @@ export const isAuthanticated = async (
   res: Response,
   next: Function
 ) => {
-  // const bearerHeader = req.headers["authorization"];
-  // if (!bearerHeader) {
-  //   return res.status(400).json({ message: "User Unauthorized please login" });
-  // }
-
   const bearerToken = req.cookies;
   if (!bearerToken["token"]) {
-    return res
-      .status(400)
-      .json({
-        message: "Token not available , pleas login again",
-        bearerToken,
-      });
+    return res.status(400).json({
+      message: "Token not available , pleas login again",
+      bearerToken,
+    });
   }
-  // const bearerToken = bearerHeader.split(" ");
+
   try {
-    // req.auth = jwt.verify(bearerToken[1], "saket");
     req.auth = jwt.verify(bearerToken["token"], "saket");
     next();
   } catch (e: any) {

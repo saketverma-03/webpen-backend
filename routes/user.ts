@@ -8,6 +8,4 @@ router.post("/signin", signin);
 // router.("/signout")
 // router.("/resetpassword")
 
-router.get("/test", isAuthanticated);
-
 export default router;
