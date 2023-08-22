@@ -9,14 +9,7 @@ import userRoutes from "./routes/user";
 const app = express();
 app.use(cookieParser());
 app.use(bodyParser.json());
-app.use(
-  cors({
-     origin: "https://master.d3ncw9mhvwljc2.amplifyapp.com",
-   // origin: true,
-   // credentials: true,
-    // " Access-Control-Allow-Origin": true
-  })
-);
+app.use(cors());
 
 app.use("/api/user", userRoutes);
 app.use("/api/projects", projectRouter);
