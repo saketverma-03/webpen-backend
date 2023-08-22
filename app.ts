@@ -19,4 +19,4 @@ app.get("/", async (req: Request, res: Response) => {
   res.json({ message: `${req.body.name}Num,ber of users are ${users}` });
 });
 
-app.listen(3001, () => console.log("serverStarted at port 3001"));
+app.listen(3831, () => console.log("serverStarted at port 3001"));
